@@ -1,28 +1,39 @@
-import java.util.Arrays;
-
+import java.util.ArrayList;
+import java.util.Collections;
 class Solution {
-
-
-
     public int solution(int[] nums) {
-        int ans = 0;
+       int len = nums.length;
+		ArrayList<Integer> arr = new ArrayList<Integer>();
+		for (int i = 0; i < len; i++) {
+			for (int j = i + 1; j < len; j++) {
+				for (int k = j + 1; k < len; k++) {
+					arr.add(nums[i] + nums[j] + nums[k]);
+				}
+			}
+		}
 
-        for(int i = 0; i < nums.length - 2; i ++){
-            for(int j = i + 1; j < nums.length - 1; j ++){
-                for(int k = j + 1; k < nums.length; k ++ ){
-                    if(isPrime(nums[i] + nums[j] + nums[k])){
-                        ans += 1;  
-                    } 
-                }
-            }
-        }
-        return ans;
-    }
-    public Boolean isPrime(int num){
-        int cnt = 0;
-        for(int i = 1; i <= (int)Math.sqrt(num); i ++){
-            if(num % i == 0) cnt += 1; 
-        }
-        return cnt == 1;
+		Collections.sort(arr);
+
+
+		int arrLen = arr.get(arr.size() - 1);
+		boolean[] bl = new boolean[arrLen + 1];
+		bl[0] = bl[1] = true;
+
+		for (int i = 2; i <= arrLen; i++) {
+			if (bl[i])
+				continue;
+			for (int j = i * 2; j <= arrLen; j += i) {
+				bl[j] = true;
+			}
+		}
+
+		int answer = 0;
+		for (int i = 0; i < arr.size(); i++) {
+			if (!bl[arr.get(i)]) {
+				answer++;
+			}
+		}
+
+        return answer;
     }
 }
