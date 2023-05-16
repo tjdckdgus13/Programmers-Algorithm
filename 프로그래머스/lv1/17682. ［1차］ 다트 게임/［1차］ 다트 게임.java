@@ -1,39 +1,58 @@
-import java.util.Hashtable;
-
+import java.util.LinkedList;
+import java.util.Queue;
 class Solution {
-  public int solution(String dartResult) {
-      int answer = 0;
-        Hashtable<String, Integer> table = new Hashtable<>();
-        table.put("S",1);
-        table.put("D",2);
-        table.put("T",3);
+    public int solution(String dartResult) {
+      Queue<Character> q = new LinkedList<Character>();
 
-        int[] temp = new int[3];
-        int num = 0;
-        int count = 0;
+		for (int i = 0; i < dartResult.length(); i++) {
+			q.add(dartResult.charAt(i));
+		}
+		int check = 0;
+		int[] arr = new int[3];
+		int answer = 0;
+		while (!q.isEmpty()) {
+			char c = q.poll();
+			int num;
+			if (q.peek() == '0') {
+				num = Character.getNumericValue(c + q.poll());
+			} else {
+				num = Character.getNumericValue(c);
+			}
 
-        for(int i=0; i<dartResult.length(); i++) {
-            String key = dartResult.charAt(i) + "";
-
-            if(table.containsKey(key)) {
-                num = (int)Math.pow(num, table.get(key));
-                temp[count++] = num;
-                num = 0;
-            } else if(key.equals("*")) {
-                if(count-2 >= 0) temp[count-2] *= 2; 
-                temp[count-1] *= 2;
-            } else if(key.equals("#")) {
-                temp[count-1] *= -1;
-            } else {
-                if(num > 0) key = "10";
-                num = Integer.parseInt(key);
-            }
-        }
-
-        for(int i=0; i<temp.length; i++) {
-            answer += temp[i];
-        }
-
+			int count = 0;
+			while (q.peek() > '9' || q.peek() < '0') {
+				char a = q.poll();
+				switch (a) {
+				case 'S':
+					count = num;
+					break;
+				case 'D':
+					count = num * num;
+					break;
+				case 'T':
+					count = num * num * num;
+					break;
+				case '*':
+					if (check == 0) {
+						count *= 2;
+					} else {
+						count *= 2;
+						arr[check - 1] = arr[check - 1] * 2;
+					}
+					break;
+				case '#':
+					count *= -1;
+					break;
+				}
+				if (q.peek() == null)
+					break;
+			}
+			arr[check] = count;
+			check++;
+		}
+		for (int i : arr) {
+			answer += i;
+		}
         return answer;
-  }
+    }
 }
