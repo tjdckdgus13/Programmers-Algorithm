@@ -4,9 +4,11 @@ class Solution {
     public int solution(String dartResult) {
       Queue<Character> q = new LinkedList<Character>();
 
-		for (int i = 0; i < dartResult.length(); i++) {
+        int re = dartResult.length();
+		for (int i = 0; i < re; i++) {
 			q.add(dartResult.charAt(i));
 		}
+        
 		int check = 0;
 		int[] arr = new int[3];
 		int answer = 0;
