@@ -2,7 +2,6 @@ import java.util.ArrayList;
 class Solution {
     public int[] solution(int[] arr, int[] query) {
         ArrayList<Integer> arrL = new ArrayList<Integer>();
-
 		for (int i : arr) {
 			arrL.add(i);
 		}
