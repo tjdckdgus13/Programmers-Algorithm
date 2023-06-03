@@ -44,11 +44,7 @@ class Solution {
 				fee.put(k, end);
 			}
 			int v = fee.get(k);
-			if (v > fees[0]) {
-				answer[j] = fees[1] + (int) Math.ceil(((v - fees[0]) / (double) fees[2])) * fees[3];
-			} else {
-				answer[j] = fees[1];
-			}
+			answer[j] = v > fees[0] ? fees[1] + (int) Math.ceil(((v - fees[0]) / (double) fees[2])) * fees[3] : fees[1];
 			j++;
 		}
         return answer;
